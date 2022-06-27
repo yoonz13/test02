@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로컬 스토리지(색상 설정&저장, 읽어오기)</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+    label{
+        width: 160px;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    button{
+        padding: 5px 10px;
+    }
+</style>
+<body>
+    <textarea name="text" id="text" cols="30" rows="10" placeholder="">
+    </textarea><br>
+    <!-- value속성 지원X, 텍스트 노드에 적어야함 -->
+
+    <label for="textcolour">change text colour</label>
+    <input type="color" id="textcolour" value="#0000ff"><br>
+    <label for="bgcolour">change text colour</label>
+    <input type="color" id="bgcolour" value="#608eb7"><br>
+
+    <button id="set_colour">set colour</button>
+    <button id="get_colour">get colour</button>
+    <script>
+        $(function(){
+            $('#text').val('글상자 영역의 색상값을 저장합니다');
+
+            //글자색 적용
+            $('#textcolour').change(function(){
+                var colour = $(this).val();
+                console.log(colour);
+                $('#text').css('color', colour);
+            });
+
+            //배경색 적용
+            $('#bgcolour').change(function(){
+                var colour = $(this).val();
+                $('#text').css('backgroundColor', colour);
+            });
+
+            //set_button: 글자색, 배경색을 로컬 스토리지에 저장
+            $('#set_colour').click(function(){
+                var textcolour = $('#textcolour').val();
+                var bgcolour = $('#bgcolour').val();
+
+                localStorage.setItem('textcolour',textcolour);
+                localStorage.setItem('bgcolour',bgcolour);
+            });
+
+            //저장된 컬러값 읽어오기
+            $('#get_colour').click(function(){
+                var textcolour = localStorage.getItem('textcolour');
+                var bgcolour = localStorage.getItem('bgcolour');
+
+                $('#text').css({
+                    'color': textcolour,
+                    'backgroundColor': bgcolour
+                });
+                
+            });
+        });
+
+        
+    </script>
+</body>
+</html>
